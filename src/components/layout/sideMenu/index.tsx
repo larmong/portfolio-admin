@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
@@ -19,6 +19,13 @@ export default function SideMenu() {
   const router = useLocation();
   const navigate = useNavigate();
   const [isSideMenu, setIsSideMenu] = useRecoilState<boolean>(isSideMenuState);
+  const [defaultMenu, setDefaultMenu] = useState<{
+    active: string[];
+    openMenu: string;
+  }>({
+    active: [""],
+    openMenu: "",
+  });
 
   const toggleCollapsed = () => {
     setIsSideMenu(!isSideMenu);
@@ -27,11 +34,6 @@ export default function SideMenu() {
   const handleMoveToMenu: MenuProps["onClick"] = (e) => {
     let router = "";
 
-    if (e.key === "dashboard") {
-      navigate("/");
-      return;
-    }
-
     e.keyPath.forEach((route) => {
       router = `/${route}` + router;
     });
@@ -39,13 +41,18 @@ export default function SideMenu() {
     void navigate(router);
   };
 
-  useState(() => {
-    console.log(router.pathname);
-  });
+  useEffect(() => {
+    let routes = router.pathname.split("/").slice(1);
+
+    setDefaultMenu({
+      active: routes,
+      openMenu: routes.length > 1 ? routes[0] : "",
+    });
+  }, [router]);
 
   return (
     <Wrapper isSideMenu={isSideMenu}>
-      <Logo>
+      <Logo isSideMenu={isSideMenu}>
         <h1>
           <img
             onClick={() => {
@@ -59,7 +66,9 @@ export default function SideMenu() {
       <MenuWrapper>
         <Menu
           onClick={handleMoveToMenu}
+          defaultOpenKeys={["members", "project"]}
           defaultSelectedKeys={["dashboard"]}
+          selectedKeys={defaultMenu.active}
           mode="inline"
           inlineCollapsed={isSideMenu}
           items={menus}
