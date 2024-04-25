@@ -45,12 +45,11 @@ export const Wrapper = styled.div`
   .view-button-group {
     display: flex;
     gap: 10px;
-
-    .view-button {
-      padding: 4px 10px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
+  }
+  .view-button {
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
   }
 
   .skills-group {

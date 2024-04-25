@@ -27,6 +27,11 @@ export const isPostDataState = atom<ITypeProject[] | []>({
   default: [],
 });
 
+export const isModalState = atom<boolean>({
+  key: "isModalState",
+  default: false,
+});
+
 export const isPostsState = atom<ProjectDataType>({
   key: "isPostsState",
   default: {

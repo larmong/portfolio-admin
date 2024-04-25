@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, Key } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { TableRowSelection } from "antd/es/table/interface";
 import type { TableProps } from "antd";
 import { Table } from "antd";
@@ -8,11 +9,14 @@ import { IPropsBoard } from "@components/board/type";
 import { MembersDataType } from "@pages/members/type";
 import { ProjectDataType } from "@pages/project/type";
 import { DeleteBtn, Wrapper } from "@components/board/style";
+import { isModalState, isPostsState } from "@store/store";
 
 export default function Board({ data }: IPropsBoard) {
   const router = useLocation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
   const [route, setRoute] = useState<string>("");
+  const [isPost, setIsPost] = useRecoilState<ProjectDataType>(isPostsState);
+  const setIsModal = useSetRecoilState<boolean>(isModalState);
 
   useEffect(() => {
     setRoute(router?.pathname.split("/").slice(1)[0]);
@@ -148,6 +152,23 @@ export default function Board({ data }: IPropsBoard) {
                 view
               </button>
             </div>
+          ),
+        },
+        {
+          title: "디테일",
+          dataIndex: "key",
+          key: "key",
+          width: "5%",
+          render: (_, data: any) => (
+            <button
+              className="view-button"
+              onClick={() => {
+                setIsModal(true);
+                setIsPost(data);
+              }}
+            >
+              detail
+            </button>
           ),
         }
       );
