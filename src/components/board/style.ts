@@ -15,26 +15,55 @@ export const Wrapper = styled.div`
   .ant-pagination {
     justify-content: center !important;
   }
+
   .ant-table-wrapper
     .ant-table-tbody
     .ant-table-row.ant-table-row-selected
     > .ant-table-cell {
     background: ${Default.bg};
   }
+
   .ant-checkbox-inner:after,
   .ant-checkbox-inner:hover:after {
     background: ${Default.color} !important;
   }
+
   .ant-checkbox-checked .ant-checkbox-inner {
     background-color: ${Default.color} !important;
     border-color: ${Default.color} !important;
   }
+
   .ant-checkbox:hover .ant-checkbox-inner,
   .ant-pagination .ant-pagination-item-active {
     border-color: ${Default.color} !important;
   }
+
   .ant-pagination .ant-pagination-item-active a {
     color: ${Default.color} !important;
+  }
+
+  .view-button-group {
+    display: flex;
+    gap: 10px;
+
+    .view-button {
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+  }
+
+  .skills-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .skill {
+      width: calc(50% - 10px);
+      display: inline-block;
+      text-transform: uppercase;
+      padding: 0 10px;
+    }
   }
 `;
 

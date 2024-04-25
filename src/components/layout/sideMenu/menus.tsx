@@ -34,8 +34,7 @@ export const menus: MenuItem[] = [
   ]),
   // project
   getItem("project", "project", <DesktopOutlined />, [
-    getItem("web", "web"),
-    getItem("app", "mobile"),
-    getItem("design", "design"),
+    getItem("react", "react"),
+    getItem("static", "static"),
   ]),
 ];

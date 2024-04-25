@@ -1,7 +1,6 @@
 export interface ITypeProject {
   id?: string;
   categoryId: string;
-  date: string;
   startDate: string;
   endDate: string;
   title: string;

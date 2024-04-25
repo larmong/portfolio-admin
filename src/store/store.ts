@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { ITypeProject } from "@commons/libraries/firebase/data.types";
+import { ProjectDataType } from "@pages/project/type";
 
 export const loginUserState = atom<any>({
   key: "loginUserState",
@@ -26,12 +27,11 @@ export const isPostDataState = atom<ITypeProject[] | []>({
   default: [],
 });
 
-export const isPostsState = atom<ITypeProject>({
+export const isPostsState = atom<ProjectDataType>({
   key: "isPostsState",
   default: {
-    id: "",
+    key: "",
     categoryId: "",
-    date: "",
     startDate: "",
     endDate: "",
     title: "",
