@@ -33,8 +33,11 @@ export default function SideMenu() {
 
   const handleMoveToMenu: MenuProps["onClick"] = (e) => {
     let router = "";
-
     e.keyPath.forEach((route) => {
+      if (route === "dashboard") {
+        navigate("/");
+        return;
+      }
       router = `/${route}` + router;
     });
 

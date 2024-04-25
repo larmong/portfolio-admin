@@ -1,6 +1,13 @@
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Form, Input, FormProps } from "antd";
 
+import { FieldType } from "@pages/login/type";
+import { authService } from "@commons/libraries/firebase/firebase.config";
+import { loginUserState } from "@store/store";
 import {
   InputItem,
   LoginForm,
@@ -8,14 +15,41 @@ import {
   Logo,
   Wrapper,
 } from "@pages/login/style";
-import { FieldType } from "@pages/login/type";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [loginUser, setLoginUser] = useRecoilState(loginUserState);
+  const [_, setCookie] = useCookies(["accessToken", "loginUser"]);
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values: FieldType) => {
-    console.log("Success:", values);
+  const handleToLogin: FormProps<FieldType>["onFinish"] = (
+    values: FieldType
+  ) => {
+    void onSubmit(values);
   };
+
+  const onSubmit = async (values: { username: string; password: string }) => {
+    const { username, password } = values;
+    try {
+      const data = await signInWithEmailAndPassword(
+        authService,
+        username,
+        password
+      );
+      if (data) {
+        setLoginUser(data.user);
+      }
+    } catch (error) {
+      window.alert(`등록되지 않은 관리자입니다.\n ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    if (loginUser) {
+      setCookie("accessToken", `${loginUser.accessToken}`);
+      setCookie("loginUser", `${loginUser.email}`);
+      navigate("/", { replace: true });
+    }
+  }, [loginUser]);
 
   return (
     <Wrapper>
@@ -30,7 +64,11 @@ export default function Login() {
           />
         </Logo>
         <LoginForm>
-          <Form name="login-form" className="login-form" onFinish={onFinish}>
+          <Form
+            name="login-form"
+            className="login-form"
+            onFinish={handleToLogin}
+          >
             <InputItem>
               <span>id</span>
               <Form.Item<FieldType> name="username" className="ant-input">

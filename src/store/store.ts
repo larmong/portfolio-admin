@@ -1,14 +1,9 @@
 import { atom } from "recoil";
 import { ITypeProject } from "@commons/libraries/firebase/data.types";
 
-export const routeState = atom<string>({
-  key: "routeState",
-  default: "/",
-});
-
-export const accessTokenState = atom({
-  key: "accessTokenState",
-  default: "123",
+export const loginUserState = atom<any>({
+  key: "loginUserState",
+  default: null,
 });
 
 export const isSideMenuState = atom<boolean>({
