@@ -16,7 +16,7 @@ import { useNavigate } from "react-router";
 
 export default function App() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["accessToken", "loginUser"]);
+  const [cookies] = useCookies(["accessToken", "loginUser"]);
 
   useEffect(() => {
     if (!cookies.accessToken && !cookies.loginUser) {

@@ -19,7 +19,10 @@ import {
 export default function Login() {
   const navigate = useNavigate();
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-  const [_, setCookie] = useCookies(["accessToken", "loginUser"]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "accessToken",
+    "loginUser",
+  ]);
 
   const handleToLogin: FormProps<FieldType>["onFinish"] = (
     values: FieldType
@@ -50,6 +53,13 @@ export default function Login() {
       navigate("/", { replace: true });
     }
   }, [loginUser]);
+
+  useEffect(() => {
+    if (cookies.accessToken || cookies.loginUser) {
+      removeCookie("accessToken");
+      removeCookie("loginUser");
+    }
+  }, []);
 
   return (
     <Wrapper>

@@ -14,15 +14,13 @@ export default function Layout({ children }: IPropsLayout) {
   const isSideMenu = useRecoilValue<boolean>(isSideMenuState);
 
   const handleClickLogout = async () => {
-    try {
-      await authService.signOut();
-
-      removeCookie("accessToken");
-      removeCookie("loginUser");
-
-      navigate("/");
-    } catch (error) {
-      window.alert(`비정상적인 오류입니다. \n ${error}`);
+    if (cookies.accessToken) {
+      try {
+        await authService.signOut();
+        navigate("/");
+      } catch (error) {
+        window.alert(`비정상적인 오류입니다. \n ${error}`);
+      }
     }
   };
 
