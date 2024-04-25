@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { useState, useEffect, Key } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import { TableRowSelection } from "antd/es/table/interface";
 import type { TableProps } from "antd";
 import { Table } from "antd";
@@ -15,7 +15,7 @@ export default function Board({ data }: IPropsBoard) {
   const router = useLocation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
   const [route, setRoute] = useState<string>("");
-  const [isPost, setIsPost] = useRecoilState<ProjectDataType>(isPostsState);
+  const setIsPost = useSetRecoilState<ProjectDataType>(isPostsState);
   const setIsModal = useSetRecoilState<boolean>(isModalState);
 
   useEffect(() => {
